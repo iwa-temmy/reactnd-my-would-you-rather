@@ -6,7 +6,39 @@ import { Card, Grid, Form} from 'semantic-ui-react';
 import { handleAddQuestion } from '../actions/questions';
 
 class NewQuestion extends Component {
+    state = {
+		optionOne: '',
+		optionTwo: '',
+		toHome: false
+	};
+
+	handleInputChange = (e) => {
+		const name = e.target.name;
+		const value = e.target.value;
+		this.setState({
+			[name]: value
+		});
+	};
+
+	handleSubmit = (e) => {
+		const { optionOne, optionTwo } = this.state;
+		const { dispatch } = this.props;
+
+		e.preventDefault();
+
+		this.setState(
+			{
+				optionOne: '',
+				optionTwo: '',
+				toHome: true
+			},
+			() => dispatch(handleAddQuestion(optionOne, optionTwo))
+		);
+	};
     render(){
+        const { optionOne, optionTwo, toHome } = this.state;
+
+		if (toHome === true) return <Redirect to="/" />;
         return(
             <Fragment>
                  <Grid centered>
@@ -20,7 +52,22 @@ class NewQuestion extends Component {
                             <Card>
                                 <Card.Content>
                                     <Form>
+                                        <Form.Field>
+                                            <Form.Input type='text' label='Option One' placeholder='Option One' 
+                                            value={optionOne} onChange={this.handleInputChange} />
+                                        </Form.Field>
+                                        <h3>
+                                            <p>OR</p>
+                                        </h3>
+                                        <Form.Field>
+                                            <Form.Input type='text' label='Option Two' placeholder='Option Two' 
+                                            value={optionTwo} onChange={this.handleInputChange} />
+                                        </Form.Field>
 
+                                        <Form.Button type="submit" disabled={optionOne === '' || optionTwo === ''}>
+                                            Submit
+                                        </Form.Button>
+ 
                                     </Form>
                                 </Card.Content>
                             </Card>
