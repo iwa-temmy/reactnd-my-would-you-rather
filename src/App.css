@@ -40,6 +40,9 @@ mtb-3{
 .mr-3{
   margin-right: .5rem!important;
 }
+.imgWidth{
+  width: 30px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
