@@ -13,7 +13,8 @@ class UnansweredQuestion extends Component{
 	}
     handleChange = (e, {value}) => this.setState({value})
     handleSubmit = (id, e) => {
-		const answer = this.form.answer.value;
+		const answer = this.form.value;
+        console.log(answer)
 		const { dispatch } = this.props;
 
 		e.preventDefault();
@@ -24,6 +25,7 @@ class UnansweredQuestion extends Component{
 			this.setState({ errorMsg: 'You must make a choice' });
 		}
 	}
+    
     render(){
         const { question, author } = this.props;
 
@@ -33,7 +35,7 @@ class UnansweredQuestion extends Component{
 
 		const { optionOne, optionTwo, timestamp, id } = question;
 		const { name, avatarURL } = author;
-		const { errorMsg } = this.state;
+		const { errorMsg} = this.state;
         return(
             <Grid centered>
                 <Grid.Row centered>
@@ -48,17 +50,18 @@ class UnansweredQuestion extends Component{
                                 <Form onSubmit={(e) => this.handleSubmit(id, e)}
                                     ref={(f) => (this.form = f)}
                                 > 
-                                {errorMsg ? (
-									<p className="text-danger">{errorMsg}</p>
-								) : null}
-                                    <Form.Group stacked>
-                                        <Form.Radio stacked label={optionOne.text} value='optionOne' name='answer' 
-                                        checked={this.state.value === 'optionOne'} onChange={this.handleChange}/>
-                                        <Form.Radio label={optionTwo.text} value='optionTwo' name='answer' 
-                                        checked={this.state.value === 'optionTwo'} onChange={this.handleChange}/> 
-
+                                        {errorMsg ? (
+									        <p className="text-danger">{errorMsg}</p>
+								            ) : null}
+                                        <Form.Field>
+                                            <Form.Radio label={optionOne.text}  name='answer' value='optionOne'
+                                            checked={this.state.value === 'optionOne'} onChange={this.handleChange}/>
+                                        </Form.Field>
+                                        <Form.Field>
+                                            <Form.Radio label={optionTwo.text}  name='answer' value= 'optionTwo'
+                                            checked={this.state.value === 'optionTwo'} onChange={this.handleChange}/>
+                                        </Form.Field>
                                         <Button positive onSubmit={this.handleSubmit}>Submit</Button>   
-                                    </Form.Group>
                                 </Form>
                             </Card.Description>
                             </Card.Content>
