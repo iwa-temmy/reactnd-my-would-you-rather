@@ -43,6 +43,14 @@ mtb-3{
 .imgWidth{
   width: 30px;
 }
+.answerList{
+  text-align: center;
+  list-style-type: circle;
+}
+.answerList-item{
+  border: 2px solid #cacaca;
+  border-radius: 5px ;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

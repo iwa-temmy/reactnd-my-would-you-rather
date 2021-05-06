@@ -15,10 +15,13 @@ class AnsweredQuestion extends Component{
         }
 
         const { optionOne, optionTwo, timestamp } = question;
-		const { name, avatarURL } = author;
-		const totalVotes = optionOne.votes.length + optionTwo.votes.length;
-		const optionOnePercent = Math.round((optionOne.votes.length / totalVotes) * 100);
-		const optionTwoPercent = Math.round((optionTwo.votes.length / totalVotes) * 100);
+
+		const { name, avatarURL } = author
+		const optionOneVotes = question.optionOne.votes.length;
+		const optionTwoVotes = question.optionTwo.votes.length;
+		const totalVotes = optionOneVotes + optionTwoVotes
+
+
 
         return (
             <Grid centered>
@@ -31,36 +34,41 @@ class AnsweredQuestion extends Component{
                                     {name} asks:
                                 </Card.Header>
                                 <Card.Description>
-                                <ul>
-								<li>
+                                <ul className='answerList'>
+								<li className='answerList-item'>
 									{optionOne.text}
 									{optionOne.votes.includes(authedUser) ? (
-										<span className="">
+										<div>
+											<br/>
+										<span>
 											&lt;- Your choice
 										</span>
+										</div>
 									) : null}
 								</li>
 								<Progress
-									value={optionOnePercent}
-									total={`${optionOnePercent}%`}
-                                    progress='percent'
+									percent={((optionOneVotes / totalVotes) * 100).toFixed(2)}
+                                    progress
 								/>
 								<Card.Description className="text-muted">
-									chosen by {optionOne.votes.length} out of {totalVotes}{' '}
+									chosen by {optionOneVotes} out of {totalVotes}{' '}
 									users
 								</Card.Description>
-								<li>
+								<br />
+								<li className='answerList-item'>
 									{optionTwo.text}
 									{optionTwo.votes.includes(authedUser) ? (
-										<span className="text-danger ml-2">
-											&lt;- Your choice
-										</span>
+									<div>
+										<br/>
+									<span>
+										&lt;- Your choice
+									</span>
+									</div>
 									) : null}
 								</li>
 								<Progress
-									value={optionTwoPercent}
-									t={`${optionTwoPercent}%`}
-									progress='percent'
+									percent={((optionTwoVotes / totalVotes) * 100).toFixed(2)}
+									progress
 								/>
 								<Card.Description className="text-muted">
 									chosen by {optionTwo.votes.length} out of {totalVotes}{' '}
@@ -81,12 +89,14 @@ class AnsweredQuestion extends Component{
 }
 
 function mapStateToProps({ questions, users, authedUser }, { id }) {
+	const user = users[authedUser];
 	const question = questions[id];
 
 	return {
 		question: question ? question : null,
 		author: question ? users[question.author] : null,
-		authedUser
+		authedUser,
+		user,
 	};
 }
 

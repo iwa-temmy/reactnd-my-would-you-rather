@@ -51,16 +51,16 @@ class NewQuestion extends Component {
                         <Card.Group>
                             <Card>
                                 <Card.Content>
-                                    <Form>
+                                    <Form onSubmit={this.handleSubmit}>
                                         <Form.Field>
-                                            <Form.Input type='text' label='Option One' placeholder='Option One' 
+                                            <Form.Input type='text' label='Option One' name='optionOne'
                                             value={optionOne} onChange={this.handleInputChange} />
                                         </Form.Field>
                                         <h3>
                                             <p>OR</p>
                                         </h3>
                                         <Form.Field>
-                                            <Form.Input type='text' label='Option Two' placeholder='Option Two' 
+                                            <Form.Input type='text' label='Option Two' name='optionTwo' 
                                             value={optionTwo} onChange={this.handleInputChange} />
                                         </Form.Field>
 

@@ -23,9 +23,9 @@ export function addAnswer( authedUser, qid, answer ){
     return {
         type: ADD_ANSWER,
         answerInfo: {
-            authedUser,
             qid,
             answer,
+            authedUser,
         }
     }
 }
@@ -49,25 +49,26 @@ export function handleAddQuestion(optionOne, optionTwo){
     }
 }
 
-export function handleAddAnswer(qid, answer){
-    return (dispatch, getState) => {
+export function handleAddAnswer(qid, answer) {
+	return (dispatch, getState) => {
+		const { authedUser } = getState();
 
-        const {authedUser} = getState()
+		dispatch(showLoading());
 
-        dispatch(showLoading())
-
-        return saveQuestionAnswer({
-            qid,
-            answer,
-            authedUser,
-        })
-        .then((answer) => dispatch(addAnswer({
-            qid,
-            answer,
-            authedUser,
-        })))
-
-        .then(() => dispatch(hideLoading()))
-    }
-
+		return saveQuestionAnswer({
+			qid,
+			answer,
+			authedUser
+		})
+			.then(() =>
+				dispatch(
+					addAnswer({
+						qid,
+						answer,
+						authedUser
+					})
+				)
+			)
+			.then(() => dispatch(hideLoading()));
+	};
 }
