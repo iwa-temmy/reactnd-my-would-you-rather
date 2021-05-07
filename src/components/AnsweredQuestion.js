@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import PageNotFound from './PageNotFound'
-import {Card, Grid, Image, Progress} from 'semantic-ui-react'
+import {Card, Grid, Icon, Image, Progress, Segment} from 'semantic-ui-react'
 import {formatDate} from '../utils/helper'
 
 
@@ -34,47 +34,44 @@ class AnsweredQuestion extends Component{
                                     {name} asks:
                                 </Card.Header>
                                 <Card.Description>
-                                <ul className='answerList'>
-								<li className='answerList-item'>
+								<Segment className='answerList-item'>
 									{optionOne.text}
 									{optionOne.votes.includes(authedUser) ? (
 										<div>
 											<br/>
 										<span>
-											&lt;- Your choice
+											<Icon name="check circle outline positive"/> Your choice
 										</span>
 										</div>
 									) : null}
-								</li>
+
 								<Progress
 									percent={((optionOneVotes / totalVotes) * 100).toFixed(2)}
                                     progress
 								/>
-								<Card.Description className="text-muted">
-									chosen by {optionOneVotes} out of {totalVotes}{' '}
+								<p>
+								chosen by {optionOneVotes} out of {totalVotes}{' '}
 									users
-								</Card.Description>
+								</p>
+								</Segment>
 								<br />
-								<li className='answerList-item'>
+								<Segment>
 									{optionTwo.text}
 									{optionTwo.votes.includes(authedUser) ? (
 									<div>
 										<br/>
-									<span>
-										&lt;- Your choice
+									<span className='choice'>
+									<Icon name="check circle outline positive"/> Your choice
 									</span>
 									</div>
 									) : null}
-								</li>
-								<Progress
+									<Progress
 									percent={((optionTwoVotes / totalVotes) * 100).toFixed(2)}
 									progress
-								/>
-								<Card.Description className="text-muted">
-									chosen by {optionTwo.votes.length} out of {totalVotes}{' '}
-									users
-								</Card.Description>
-							</ul>
+									/>
+									<p>chosen by {optionTwo.votes.length} out of {totalVotes}{' '}
+									users</p>
+								</Segment>
                                 </Card.Description>
                             </Card.Content>
                             <Card.Content extra>

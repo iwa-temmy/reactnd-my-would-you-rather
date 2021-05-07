@@ -51,6 +51,9 @@ mtb-3{
   border: 2px solid #cacaca;
   border-radius: 5px ;
 }
+.choice{
+  color: green;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
