@@ -61,7 +61,7 @@ class AnsweredQuestion extends Component{
 									<div>
 										<br/>
 									<span className='choice'>
-									<Icon name="check circle outline positive"/> Your choice
+									<Icon name="check circle"/> Your choice
 									</span>
 									</div>
 									) : null}

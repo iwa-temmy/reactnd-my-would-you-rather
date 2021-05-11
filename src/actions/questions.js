@@ -1,8 +1,9 @@
 import { saveQuestion, saveQuestionAnswer } from '../utils/api'
+import {addQuestionToUser, addAnswerToUser} from '../actions/users'
 import {showLoading, hideLoading} from 'react-redux-loading'
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const ADD_QUESTION = 'ADD_QUESTION'
-export const ADD_ANSWER = 'ADD_ANSWER'
+export const ADD_ANSWER_TO_QUESTION = 'ADD_ANSWER_TO_QUESTION'
 
 
 export function receiveQuestions(questions){
@@ -19,14 +20,12 @@ export function addQuestion(question){
     }
 }
 
-export function addAnswer( authedUser, qid, answer ){
+export function addAnswerToQuestions( authedUser, qid, answer ){
     return {
-        type: ADD_ANSWER,
-        answerInfo: {
+        type: ADD_ANSWER_TO_QUESTION,
             qid,
             answer,
             authedUser,
-        }
     }
 }
 
@@ -44,7 +43,11 @@ export function handleAddQuestion(optionOne, optionTwo){
             optionTwoText: optionTwo,
             author: authedUser
         })
-            .then((question) => dispatch(addQuestion(question)))
+            .then(question =>{
+                dispatch(addQuestion(question))
+                dispatch(addQuestionToUser(question))
+
+            })
             .then(() => dispatch(hideLoading()))
     }
 }
@@ -56,19 +59,14 @@ export function handleAddAnswer(qid, answer) {
 		dispatch(showLoading());
 
 		return saveQuestionAnswer({
-			qid,
+            authedUser,
+            qid,
 			answer,
-			authedUser
-		})
-			.then(() =>
-				dispatch(
-					addAnswer({
-						qid,
-						answer,
-						authedUser
-					})
-				)
-			)
+        })
+			.then(() => {
+                dispatch(addAnswerToQuestions(authedUser,qid,answer))
+                dispatch(addAnswerToUser(authedUser,qid,answer))
+            })
 			.then(() => dispatch(hideLoading()));
 	};
 }

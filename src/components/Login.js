@@ -10,10 +10,6 @@ class Login extends Component {
     state = {
         value: '',
         errorMsg: '',
-        loading: 'false'
-    }
-    handleLoading = () => {
-      this.setState({loading: true})
     }
     handleChange = (e, {value}) => {
 
@@ -22,7 +18,6 @@ class Login extends Component {
     handleSubmit = (e) => {
       const authedUser = this.state.value
       const {dispatch} = this.props
-      console.log(this.state)
       
       e.preventDefault()
       if(authedUser !== ''){
@@ -35,7 +30,7 @@ class Login extends Component {
     render() {
         const {value} = this.state
         const {users} = this.props
-        const { errorMsg } = this.state;
+        const { errorMsg} = this.state;
 
         return (
             <Container className='center'>
@@ -45,7 +40,7 @@ class Login extends Component {
                     </h2>
                 <h4>Sign In</h4>
                 <p className='error'>{errorMsg}</p>
-                  <Form onSubmit={this.handleSubmit} onLoading={this.handleChange}>
+                  <Form onSubmit={this.handleSubmit}>
                     <Form.Dropdown
                           placeholder='Select user'
                           fluid

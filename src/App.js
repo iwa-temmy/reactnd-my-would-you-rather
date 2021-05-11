@@ -12,11 +12,10 @@ import PrivateApp from './components/PrivateApp';
 
 class App extends Component {
   componentDidMount() {
-    this.props.dispatch(handleInitialData())
+    this.props.handleInitialData()
   }
   render() {
     const { authedUser } = this.props
-    console.log(authedUser)
     return (
       <Router>
         <LoadingBar />
@@ -43,4 +42,4 @@ const mapStateToProps = ({ authedUser }) => {
     authedUser
   }
 }
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { handleInitialData })(App)
